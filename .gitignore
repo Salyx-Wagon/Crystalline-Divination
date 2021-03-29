@@ -5,6 +5,7 @@ bin
 .metadata
 .classpath
 .project
+.vscode
  
 # idea
 out
@@ -28,4 +29,3 @@ usernamecache.json
 logs/
 crash-reports/
 *.launch
-.vscode
