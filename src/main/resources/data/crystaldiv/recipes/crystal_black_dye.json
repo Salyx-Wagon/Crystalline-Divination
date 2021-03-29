@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "crystaldiv:lunar_crystal_dust"
+        }
+    ],
+    "result": {
+        "item": "minecraft:black_dye",
+        "count": 1
+    }
+}

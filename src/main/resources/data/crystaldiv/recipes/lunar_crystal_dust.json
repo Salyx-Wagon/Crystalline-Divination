@@ -1,0 +1,8 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+        "item": "crystaldiv:lunar_crystal"
+    },
+    "result": "crystaldiv:lunar_crystal_dust",
+    "count": 2
+}

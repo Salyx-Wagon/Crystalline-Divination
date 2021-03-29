@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "crystaldiv:example_item"
+        },
+        {
+            "item": "crystaldiv:example_item"
+        },
+        {
+            "item": "crystaldiv:example_item"
+        },
+        {
+            "item": "crystaldiv:example_item"
+        }
+    ],
+    "result": {
+        "item": "crystaldiv:example_block",
+        "count": 1
+    }
+}

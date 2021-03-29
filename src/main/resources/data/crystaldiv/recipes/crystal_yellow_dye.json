@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "crystaldiv:solar_crystal_dust"
+        }
+    ],
+    "result": {
+        "item": "minecraft:yellow_dye",
+        "count": 1
+    }
+}

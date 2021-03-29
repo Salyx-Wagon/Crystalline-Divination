@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "crystaldiv:hydro_crystal_dust"
+        },
+        {
+            "item": "crystaldiv:solar_crystal_dust"
+        }
+    ],
+    "result": {
+        "item": "minecraft:green_dye",
+        "count": 2
+    }
+}

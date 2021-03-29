@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "crystaldiv:hydro_crystal_dust"
+        }
+    ],
+    "result": {
+        "item": "minecraft:blue_dye",
+        "count": 1
+    }
+}

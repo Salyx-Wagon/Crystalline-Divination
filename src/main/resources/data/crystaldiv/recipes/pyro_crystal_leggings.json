@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:smithing",
+    "base": {
+        "item": "crystaldiv:crystal_leggings"
+    },
+    "addition": {
+        "item": "crystaldiv:pyro_crystal"
+    },
+    "result": {
+        "item": "crystaldiv:pyro_crystal_leggings"
+    }
+}

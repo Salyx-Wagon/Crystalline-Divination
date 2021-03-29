@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " # ",
+        " Q ",
+        "___"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:polished_blackstone_pressure_plate"
+        },
+        "Q": {
+            "item": "minecraft:quartz_pillar"
+        },
+        "_": {
+            "item": "minecraft:polished_blackstone_slab"
+        }
+    },
+    "result": {
+        "item": "crystaldiv:pedestal",
+        "count": 1
+    }
+}

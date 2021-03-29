@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "# #"
+    ],
+    "key": {
+        "#": {
+            "item": "crystaldiv:pure_crystal"
+        }
+    },
+    "result": {
+        "item": "crystaldiv:crystal_helmet",
+        "count": 1
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "crystaldiv:pure_crystal_dust"
+        },
+        {
+            "item": "crystaldiv:lunar_crystal_dust"
+        }
+    ],
+    "result": {
+        "item": "minecraft:gray_dye",
+        "count": 2
+    }
+}

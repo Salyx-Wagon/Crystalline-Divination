@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:smithing",
+    "base": {
+        "item": "crystaldiv:crystal_hoe"
+    },
+    "addition": {
+        "item": "crystaldiv:hydro_crystal"
+    },
+    "result": {
+        "item": "crystaldiv:hydro_crystal_hoe"
+    }
+}

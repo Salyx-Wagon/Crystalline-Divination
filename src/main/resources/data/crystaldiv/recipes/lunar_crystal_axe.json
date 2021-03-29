@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:smithing",
+    "base": {
+        "item": "crystaldiv:crystal_axe"
+    },
+    "addition": {
+        "item": "crystaldiv:lunar_crystal"
+    },
+    "result": {
+        "item": "crystaldiv:lunar_crystal_axe"
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " #C",
+        "O/U",
+        "/D "
+    ],
+    "key": {
+        "#": {
+            "item": "crystaldiv:lunar_crystal"
+        },
+        "C": {
+            "item": "crystaldiv:pure_crystal"
+        },
+        "O": {
+            "item": "crystaldiv:solar_crystal"
+        },
+        "/": {
+            "item": "minecraft:stick"
+        },
+        "U": {
+            "item": "crystaldiv:hydro_crystal"
+        },
+        "D": {
+            "item": "crystaldiv:pyro_crystal"
+        }
+    },
+    "result": {
+        "item": "crystaldiv:divination_wand",
+        "count": 1
+    }
+}

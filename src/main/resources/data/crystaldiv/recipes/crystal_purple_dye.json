@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "crystaldiv:pyro_crystal_dust"
+        },
+        {
+            "item": "crystaldiv:hydro_crystal_dust"
+        }
+    ],
+    "result": {
+        "item": "minecraft:purple_dye",
+        "count": 2
+    }
+}

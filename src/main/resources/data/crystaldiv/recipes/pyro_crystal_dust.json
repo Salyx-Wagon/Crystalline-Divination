@@ -1,0 +1,8 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+        "item": "crystaldiv:pyro_crystal"
+    },
+    "result": "crystaldiv:pyro_crystal_dust",
+    "count": 2
+}

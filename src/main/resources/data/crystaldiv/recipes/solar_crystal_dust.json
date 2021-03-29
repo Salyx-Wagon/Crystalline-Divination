@@ -1,0 +1,8 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+        "item": "crystaldiv:solar_crystal"
+    },
+    "result": "crystaldiv:solar_crystal_dust",
+    "count": 2
+}

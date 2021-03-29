@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "crystaldiv:solar_crystal"
+        },
+        {
+            "item": "crystaldiv:lunar_crystal"
+        },
+        {
+            "item": "crystaldiv:pyro_crystal"
+        },
+        {
+            "item": "crystaldiv:hydro_crystal"
+        }
+    ],
+    "result": {
+        "item": "crystaldiv:pure_crystal",
+        "count": 1
+    }
+}

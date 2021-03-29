@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "crystaldiv:block/pedestal" },
+        "facing=south": { "model": "crystaldiv:block/pedestal", "y": 180 },
+        "facing=west":  { "model": "crystaldiv:block/pedestal", "y": 270 },
+        "facing=east":  { "model": "crystaldiv:block/pedestal", "y": 90 }
+    }
+}

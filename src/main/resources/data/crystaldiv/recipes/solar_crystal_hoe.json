@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:smithing",
+    "base": {
+        "item": "crystaldiv:crystal_hoe"
+    },
+    "addition": {
+        "item": "crystaldiv:solar_crystal"
+    },
+    "result": {
+        "item": "crystaldiv:solar_crystal_hoe"
+    }
+}
