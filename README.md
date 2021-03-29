@@ -6,18 +6,31 @@ v0.6
 Changelog
 *********
 +added changelog.
+
 +added Crystalline Tablet.
+
 +added crystal dust variants.
+
 +added dust recipies for dyes.
+
 +added new render animation for the storage rune.
+
 +added language support for various items.
+
 ~runic crafting recipies are now stored in the Divination Wand's class instead of the Base Rune's.
+
 ~crystal_dust has been renamed to pure_crystal_dust.
+
 ~fixed bug when opening modded block entities when holding a block would place that block.
+
 ~changed the 'learning tab' to 'Crystalline Divination Tab'.
+
 ~changed the order of items in the Crystalline Divination Tab.
+
 -removed test enchantment.
+
 -removed test block.
+
 -removed test item.
 
 
