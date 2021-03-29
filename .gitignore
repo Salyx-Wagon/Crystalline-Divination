@@ -28,3 +28,4 @@ usernamecache.json
 logs/
 crash-reports/
 *.launch
+.vscode
