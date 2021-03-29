@@ -40,28 +40,26 @@ public class BaseRune extends Rune{
             //TileEntity te = worldIn.getTileEntity(pos);
             BaseRuneTile bte = (BaseRuneTile) worldIn.getTileEntity(pos);
             LazyOptional<IItemHandler> itemHandler = bte.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-            if(player.getHeldItemMainhand().isEmpty()) {
-            
-            } //else if(player.getHeldItemMainhand().isItemEqual(ItemInit.DIVINATION_WAND.get().getDefaultInstance()) && player.isSneaking()){
-                //craft storage rune
-              //  if(bte.getItem(0).isItemEqualIgnoreDurability(Items.CHEST.getDefaultInstance()) &&
-              //  bte.getItem(1).isItemEqualIgnoreDurability(ItemInit.SOLAR_CRYSTAL.get().getDefaultInstance()) &&
-              //  bte.getItem(2).isItemEqualIgnoreDurability(ItemInit.LUNAR_CRYSTAL.get().getDefaultInstance()) &&
-              //  bte.getItem(3).isItemEqualIgnoreDurability(ItemInit.PYRO_CRYSTAL.get().getDefaultInstance()) &&
-              //  bte.getItem(4).isItemEqualIgnoreDurability(ItemInit.HYDRO_CRYSTAL.get().getDefaultInstance())) {
-              //      bte.crafted = true;
-              //      worldIn.setBlockState(pos, BlockInit.STORAGE_RUNE.get().getDefaultState().with(StorageRune.FACING, state.get(this.FACING)));
-              //      
-              //  }
-            //}
-            else if(clickCooldown == 0){
-                for(int e=0; e<5; e++) {
-                    int slot = e;
-                    if(bte.getItem(e).isEmpty()) {
-                        itemHandler.ifPresent(h -> h.insertItem(slot, player.getHeldItemMainhand().getItem().getDefaultInstance(), false));
-                        player.getHeldItemMainhand().setCount(player.getHeldItemMainhand().getCount()-1);
-                        break;
+            if(clickCooldown == 0) {
+                if(player.isSneaking() && player.getHeldItemMainhand().isEmpty()) {
+                    for(int e=4; e>-1; e--) {
+                        int slot = e;
+                        if(!bte.getItem(e).isEmpty()) {
+                            itemHandler.ifPresent(h -> player.addItemStackToInventory(h.extractItem(slot, 1, false)));
+                            break;
                         
+                        }   
+                    }
+                }
+                else if(!player.isSneaking() && !player.getHeldItemMainhand().isEmpty()){
+                    for(int e=0; e<5; e++) {
+                        int slot = e;
+                        if(bte.getItem(e).isEmpty()) {
+                            itemHandler.ifPresent(h -> h.insertItem(slot, player.getHeldItemMainhand().getItem().getDefaultInstance(), false));
+                            player.getHeldItemMainhand().setCount(player.getHeldItemMainhand().getCount()-1);
+                            break;
+                        
+                        }   
                     }
                 }
                 clickCooldown += 10;

@@ -236,12 +236,10 @@ public class EventHandler {
     }
     @SubscribeEvent
     public static void placeBlockEvent(final EntityPlaceEvent event){
-        System.out.println(1);
         if(event.getEntity() instanceof PlayerEntity){
             if(!event.getEntity().isSneaking() && (event.getPlacedAgainst().getBlock() instanceof Rune||
                                                     //event.getPlacedAgainst().equals(BlockInit.STORAGE_RUNE) ||
                                                     event.getPlacedAgainst().getBlock() instanceof Pedestal)) {
-                System.out.println(2);
                 event.setCanceled(true);
             }
         }

@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -18,7 +17,9 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import salyx.crystalline.divination.common.tiles.PedestalTile;
 import salyx.crystalline.divination.core.init.TileEntityInit;
 
@@ -67,13 +68,27 @@ public class Pedestal extends BaseHorizontalBlock{
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
             Hand handIn, BlockRayTraceResult hit) {
         if(!worldIn.isRemote()) {
-            TileEntity te = worldIn.getTileEntity(pos);
-            if(te instanceof PedestalTile) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (PedestalTile) te, pos);
+            PedestalTile te = (PedestalTile) worldIn.getTileEntity(pos);
+            LazyOptional<IItemHandler> itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+            //if(te instanceof PedestalTile) {
+            //    NetworkHooks.openGui((ServerPlayerEntity) player, (PedestalTile) te, pos);
+            //}
+            if(!player.getHeldItemMainhand().isEmpty() && te.getItem().isEmpty() && !player.isSneaking()){
+                itemHandler.ifPresent(h -> h.insertItem(0, player.getHeldItemMainhand().getItem().getDefaultInstance(), false));
+                player.getHeldItemMainhand().setCount(player.getHeldItemMainhand().getCount()-1);
             }
+            else if(player.getHeldItemMainhand().isEmpty() && !te.getItem().isEmpty() && player.isSneaking()){
+                //player.addItemStackToInventory
+                itemHandler.ifPresent(h -> player.addItemStackToInventory(h.extractItem(0, 1, false)));
+            }
+
         }
+
+
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
     }
+
+
     @SuppressWarnings( "deprecation" )
     @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
