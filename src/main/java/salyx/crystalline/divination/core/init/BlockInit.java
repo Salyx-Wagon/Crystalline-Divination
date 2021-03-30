@@ -17,6 +17,7 @@ import salyx.crystalline.divination.common.blocks.HydroCrystalCluster;
 import salyx.crystalline.divination.common.blocks.LunarCrystalCluster;
 import salyx.crystalline.divination.common.blocks.PyroCrystalCluster;
 import salyx.crystalline.divination.common.blocks.SolarCrystalCluster;
+import salyx.crystalline.divination.common.blocks.SolarCrystalSeed;
 
 public class BlockInit {
 
@@ -78,4 +79,8 @@ public class BlockInit {
     .sound(SoundType.CLOTH)
     .notSolid()));
     
+    public static final RegistryObject<SolarCrystalSeed> SOLAR_CRYSTAL_SEED = BLOCKS.register("solar_crystal_seed", () -> new SolarCrystalSeed(AbstractBlock.Properties
+    .create(Material.GLASS)
+    .sound(SoundType.GLASS)
+    .notSolid()));
 }

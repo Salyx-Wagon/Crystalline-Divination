@@ -2,6 +2,11 @@ package salyx.crystalline.divination.core.event;
 
 import java.util.List;
 
+import org.apache.commons.codec.net.QCodec;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,6 +33,7 @@ import salyx.crystalline.divination.CrystalDiv;
 import salyx.crystalline.divination.common.blocks.BaseRune;
 import salyx.crystalline.divination.common.blocks.Pedestal;
 import salyx.crystalline.divination.common.blocks.Rune;
+import salyx.crystalline.divination.common.blocks.SolarCrystalSeed;
 import salyx.crystalline.divination.core.init.BlockInit;
 //import salyx.crystalline.divination.core.init.BlockInit;
 import salyx.crystalline.divination.core.init.ItemInit;
@@ -231,6 +237,15 @@ public class EventHandler {
             }
             if(success) {
                 event.getPlayer().getHeldItemOffhand().setCount(event.getPlayer().getHeldItemOffhand().getCount()-1);
+            }
+        }
+        if(event.getItemStack().isItemEqual(ItemInit.SOLAR_CRYSTAL.get().getDefaultInstance())){
+            Block blockIn = event.getWorld().getBlockState(event.getPos()).getBlock();
+            if(blockIn.equals(Blocks.GLOWSTONE) || blockIn.equals(Blocks.SHROOMLIGHT) || blockIn.equals(Blocks.SEA_LANTERN)) {
+                if(event.getWorld().isAirBlock(event.getPos().up()) || event.getFace().equals(Direction.UP)) {
+                    event.getWorld().setBlockState(event.getPos().up(), BlockInit.SOLAR_CRYSTAL_SEED.get().getDefaultState());
+                    event.getItemStack().setCount(event.getItemStack().getCount()-1);
+                }
             }
         }
     }
