@@ -1,7 +1,7 @@
 # Crystalline-Divination
  A Minecraft Forge mod for 1.16.4/5 that is under heavy devolpement.
 
-v0.6
+v0.7
 
 Changelog
 *********
