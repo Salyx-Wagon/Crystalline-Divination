@@ -5,34 +5,13 @@ v0.6
 
 Changelog
 *********
-+added changelog.
++You can now shift-click items out of the base rune and pedestal with an empty hand.
 
-+added Crystalline Tablet.
++All crystal types are now renewable, each requires a specific growing condition.
 
-+added crystal dust variants.
+~You must right-click items into the pedestal, the GUI is no longer accessible.
 
-+added dust recipies for dyes.
-
-+added new render animation for the storage rune.
-
-+added language support for various items.
-
-~runic crafting recipies are now stored in the Divination Wand's class instead of the Base Rune's.
-
-~crystal_dust has been renamed to pure_crystal_dust.
-
-~fixed bug when opening modded block entities when holding a block would place that block.
-
-~changed the 'learning tab' to 'Crystalline Divination Tab'.
-
-~changed the order of items in the Crystalline Divination Tab.
-
--removed test enchantment.
-
--removed test block.
-
--removed test item.
-
+~Updated item rendering for base runes and storage runes.
 
 
 Features
@@ -52,6 +31,12 @@ Player Guide
 	-Solar and lunar crystals spawn in "grassy" biomes, lunar being more rare. Lunar can also be found occasionally in the nether.
 	-Pyro crystals spawn in desert and wasteland biomes and the nether.
 	-Hydro crystals spawn in oceans and rivers.
+
+- Crystals can be grown and reharvested in specific environments. They all have 4 stages, you know when they're grown when they start to emit particles.
+	-Solar crystals can be grown on glowstone, sea lanterns, or shroomlights. They must also have a light level of 12 or above.
+	-Lunar crystals can be grown on bedrock, obsidian, and netherite blocks. They must also have a light level of 7 or below.
+	-Pyro crystals can be grown on magma blocks. They must also have lava adjacent to the block it's on.
+	-Hydro crystals can be grown on packed ice, blue ice, prismarine, prismarine bricks, or dark prismarine. They must also have water adjacent to the block it's on.
 
 - You can craft a Pedestal to display items with a quartz pillar, polished blackstone pressure plate, and 3 polished blackstone slabs.
 
