@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import salyx.crystalline.divination.CrystalDiv;
+import salyx.crystalline.divination.client.guis.ter.BaseRuneTileEntityRenderer;
 import salyx.crystalline.divination.client.guis.ter.PedestalTileEntityRenderer;
 import salyx.crystalline.divination.client.guis.ter.StorageRuneTileEntityRenderer;
 
@@ -30,7 +31,9 @@ public class ClientEvents {
         if(StorageRuneTileEntityRenderer.r == 3600) {
             StorageRuneTileEntityRenderer.r = 0;
         }
-        
-
+        BaseRuneTileEntityRenderer.r ++;
+        if(BaseRuneTileEntityRenderer.r == 2000) {
+            BaseRuneTileEntityRenderer.r = 0;
+        }
     }
 }

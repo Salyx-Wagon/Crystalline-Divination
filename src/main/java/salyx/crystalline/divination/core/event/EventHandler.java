@@ -2,10 +2,7 @@ package salyx.crystalline.divination.core.event;
 
 import java.util.List;
 
-import org.apache.commons.codec.net.QCodec;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -22,18 +19,12 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.BlockEvent.EntityPlaceEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-//import net.minecraft.block.Blocks;
-//import net.minecraft.entity.item.ItemEntity;
-//import net.minecraft.util.math.BlockPos;
-//import net.minecraft.world.IWorld;
-//import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import salyx.crystalline.divination.CrystalDiv;
 import salyx.crystalline.divination.common.blocks.BaseRune;
 import salyx.crystalline.divination.common.blocks.Pedestal;
 import salyx.crystalline.divination.common.blocks.Rune;
-import salyx.crystalline.divination.common.blocks.SolarCrystalSeed;
 import salyx.crystalline.divination.core.init.BlockInit;
 //import salyx.crystalline.divination.core.init.BlockInit;
 import salyx.crystalline.divination.core.init.ItemInit;
@@ -239,11 +230,40 @@ public class EventHandler {
                 event.getPlayer().getHeldItemOffhand().setCount(event.getPlayer().getHeldItemOffhand().getCount()-1);
             }
         }
+
+        //Crystal Seeds
         if(event.getItemStack().isItemEqual(ItemInit.SOLAR_CRYSTAL.get().getDefaultInstance())){
             Block blockIn = event.getWorld().getBlockState(event.getPos()).getBlock();
             if(blockIn.equals(Blocks.GLOWSTONE) || blockIn.equals(Blocks.SHROOMLIGHT) || blockIn.equals(Blocks.SEA_LANTERN)) {
-                if(event.getWorld().isAirBlock(event.getPos().up()) || event.getFace().equals(Direction.UP)) {
+                if(event.getWorld().isAirBlock(event.getPos().up()) && event.getFace().equals(Direction.UP)) {
                     event.getWorld().setBlockState(event.getPos().up(), BlockInit.SOLAR_CRYSTAL_SEED.get().getDefaultState());
+                    event.getItemStack().setCount(event.getItemStack().getCount()-1);
+                }
+            }
+        }
+        if(event.getItemStack().isItemEqual(ItemInit.LUNAR_CRYSTAL.get().getDefaultInstance())){
+            Block blockIn = event.getWorld().getBlockState(event.getPos()).getBlock();
+            if(blockIn.equals(Blocks.BEDROCK) || blockIn.equals(Blocks.OBSIDIAN) || blockIn.equals(Blocks.NETHERITE_BLOCK)) {
+                if(event.getWorld().isAirBlock(event.getPos().up()) && event.getFace().equals(Direction.UP)) {
+                    event.getWorld().setBlockState(event.getPos().up(), BlockInit.LUNAR_CRYSTAL_SEED.get().getDefaultState());
+                    event.getItemStack().setCount(event.getItemStack().getCount()-1);
+                }
+            }
+        }
+        if(event.getItemStack().isItemEqual(ItemInit.PYRO_CRYSTAL.get().getDefaultInstance())){
+            Block blockIn = event.getWorld().getBlockState(event.getPos()).getBlock();
+            if(blockIn.equals(Blocks.MAGMA_BLOCK)) {
+                if(event.getWorld().isAirBlock(event.getPos().up()) && event.getFace().equals(Direction.UP)) {
+                    event.getWorld().setBlockState(event.getPos().up(), BlockInit.PYRO_CRYSTAL_SEED.get().getDefaultState());
+                    event.getItemStack().setCount(event.getItemStack().getCount()-1);
+                }
+            }
+        }
+        if(event.getItemStack().isItemEqual(ItemInit.HYDRO_CRYSTAL.get().getDefaultInstance())){
+            Block blockIn = event.getWorld().getBlockState(event.getPos()).getBlock();
+            if(blockIn.equals(Blocks.PACKED_ICE) || blockIn.equals(Blocks.BLUE_ICE) || blockIn.equals(Blocks.PRISMARINE) || blockIn.equals(Blocks.PRISMARINE_BRICKS) || blockIn.equals(Blocks.DARK_PRISMARINE)) {
+                if(event.getWorld().isAirBlock(event.getPos().up()) && event.getFace().equals(Direction.UP)) {
+                    event.getWorld().setBlockState(event.getPos().up(), BlockInit.HYDRO_CRYSTAL_SEED.get().getDefaultState());
                     event.getItemStack().setCount(event.getItemStack().getCount()-1);
                 }
             }

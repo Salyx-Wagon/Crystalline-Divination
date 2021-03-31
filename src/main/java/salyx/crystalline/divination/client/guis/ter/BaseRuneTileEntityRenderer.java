@@ -4,7 +4,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-//import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.LightTexture;
@@ -26,6 +25,8 @@ import salyx.crystalline.divination.core.init.ItemInit;
 
 public class BaseRuneTileEntityRenderer extends TileEntityRenderer<BaseRuneTile> {
 
+    public static double r = 0;
+
     private Minecraft mc = Minecraft.getInstance();
 
     public BaseRuneTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
@@ -37,21 +38,26 @@ public class BaseRuneTileEntityRenderer extends TileEntityRenderer<BaseRuneTile>
             IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
         if(te.getItem(0).equals(ItemStack.EMPTY)) 
             return; 
-                
+
+            double r1 = (Math.sin((Math.PI * (r/1000)) + (0.5 * Math.PI))/3.5)+0.5;
+            double r2 = (Math.sin((Math.PI * (((r+500)/1000))) + (0.5 * Math.PI))/3.5)+0.5;
+            double r3 = (Math.sin((Math.PI * (((r+1000)/1000))) + (0.5 * Math.PI))/3.5)+0.5;
+            double r4 = (Math.sin((Math.PI * (((r+1500)/1000))) + (0.5 * Math.PI))/3.5)+0.5;
+            float r5 = (float) (r/5.55555);
             
             ClientPlayerEntity player = mc.player;
             int lightLevel = getLightLevel(te.getWorld(), te.getPos().up());
             //System.out.println(te.getBlockState());
             if(te.getBlockState().toString().contains("down")) {
-                renderItem(te.getItem(0), new double[] {0.5d, 0.3d, 0.5d}, Vector3f.YP.rotationDegrees(0),
+                renderItem(te.getItem(0), new double[] {0.5d, 0.3d, 0.5d}, Vector3f.YP.rotationDegrees(360-r5),
                 matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.8f);
-                renderItem(te.getItem(1), new double[] {0.3d, 0.3d, 0.3d}, Vector3f.YP.rotationDegrees(0),
+                renderItem(te.getItem(1), new double[] {r1, 0.3d, r2}, Vector3f.YP.rotationDegrees(r5),
                 matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.6f);
-                renderItem(te.getItem(2), new double[] {1-0.3d, 0.3d, 0.3d}, Vector3f.YP.rotationDegrees(0),
+                renderItem(te.getItem(2), new double[] {r2, 0.3d, r3}, Vector3f.YP.rotationDegrees(r5),
                 matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.6f);
-                renderItem(te.getItem(3), new double[] {1-0.3d, 0.3d, 1-0.3d}, Vector3f.YP.rotationDegrees(0),
+                renderItem(te.getItem(3), new double[] {r3, 0.3d, r4}, Vector3f.YP.rotationDegrees(r5),
                 matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.6f);
-                renderItem(te.getItem(4), new double[] {0.3d, 0.3d, 1-0.3d}, Vector3f.YP.rotationDegrees(0),
+                renderItem(te.getItem(4), new double[] {r4, 0.3d, r1}, Vector3f.YP.rotationDegrees(r5),
                 matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.6f);
             }
             if(te.getBlockState().toString().contains("up")) {

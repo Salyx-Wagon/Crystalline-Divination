@@ -74,7 +74,8 @@ public class Pedestal extends BaseHorizontalBlock{
             //    NetworkHooks.openGui((ServerPlayerEntity) player, (PedestalTile) te, pos);
             //}
             if(!player.getHeldItemMainhand().isEmpty() && te.getItem().isEmpty() && !player.isSneaking()){
-                itemHandler.ifPresent(h -> h.insertItem(0, player.getHeldItemMainhand().getItem().getDefaultInstance(), false));
+                itemHandler.ifPresent(h -> h.insertItem(0, player.getHeldItemMainhand().copy(), false));
+                te.getItem().setCount(1);
                 player.getHeldItemMainhand().setCount(player.getHeldItemMainhand().getCount()-1);
             }
             else if(player.getHeldItemMainhand().isEmpty() && !te.getItem().isEmpty() && player.isSneaking()){

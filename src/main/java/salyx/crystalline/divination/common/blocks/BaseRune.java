@@ -15,6 +15,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import salyx.crystalline.divination.common.tiles.BaseRuneTile;
+import salyx.crystalline.divination.core.init.ItemInit;
 import salyx.crystalline.divination.core.init.TileEntityInit;
 
 public class BaseRune extends Rune{
@@ -40,7 +41,7 @@ public class BaseRune extends Rune{
             //TileEntity te = worldIn.getTileEntity(pos);
             BaseRuneTile bte = (BaseRuneTile) worldIn.getTileEntity(pos);
             LazyOptional<IItemHandler> itemHandler = bte.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-            if(clickCooldown == 0) {
+            if(clickCooldown == 0 && !player.getHeldItemMainhand().isItemEqual(ItemInit.DIVINATION_WAND.get().getDefaultInstance())) {
                 if(player.isSneaking() && player.getHeldItemMainhand().isEmpty()) {
                     for(int e=4; e>-1; e--) {
                         int slot = e;
@@ -55,15 +56,18 @@ public class BaseRune extends Rune{
                     for(int e=0; e<5; e++) {
                         int slot = e;
                         if(bte.getItem(e).isEmpty()) {
-                            itemHandler.ifPresent(h -> h.insertItem(slot, player.getHeldItemMainhand().getItem().getDefaultInstance(), false));
+                            itemHandler.ifPresent(h -> h.insertItem(slot, player.getHeldItemMainhand().copy(), false));
+                            bte.getItem(e).setCount(1);
                             player.getHeldItemMainhand().setCount(player.getHeldItemMainhand().getCount()-1);
                             break;
                         
                         }   
                     }
                 }
-                clickCooldown += 10;
+                clickCooldown += 20;
                 bte.markDirty();   
+            }
+            else if(player.getHeldItemMainhand().isItemEqual(ItemInit.DIVINATION_WAND.get().getDefaultInstance())) {
             }
         }
         worldIn.notifyBlockUpdate(pos, this.getDefaultState(), state, 0);

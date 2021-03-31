@@ -71,7 +71,8 @@ public class StorageRuneTile extends LockableLootTileEntity implements ITickable
     }
     @Override
     public void tick() {
-        
+        // TODO Auto-generated method stub
+        this.world.notifyBlockUpdate(pos, this.getBlockState(), this.getBlockState(), 0);
     }
     @Override
     public CompoundNBT serializeNBT() {

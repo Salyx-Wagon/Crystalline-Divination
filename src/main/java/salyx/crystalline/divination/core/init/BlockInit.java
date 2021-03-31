@@ -14,8 +14,11 @@ import salyx.crystalline.divination.common.blocks.BaseRune;
 import salyx.crystalline.divination.common.blocks.Pedestal;
 import salyx.crystalline.divination.common.blocks.StorageRune;
 import salyx.crystalline.divination.common.blocks.HydroCrystalCluster;
+import salyx.crystalline.divination.common.blocks.HydroCrystalSeed;
 import salyx.crystalline.divination.common.blocks.LunarCrystalCluster;
+import salyx.crystalline.divination.common.blocks.LunarCrystalSeed;
 import salyx.crystalline.divination.common.blocks.PyroCrystalCluster;
+import salyx.crystalline.divination.common.blocks.PyroCrystalSeed;
 import salyx.crystalline.divination.common.blocks.SolarCrystalCluster;
 import salyx.crystalline.divination.common.blocks.SolarCrystalSeed;
 
@@ -80,6 +83,21 @@ public class BlockInit {
     .notSolid()));
     
     public static final RegistryObject<SolarCrystalSeed> SOLAR_CRYSTAL_SEED = BLOCKS.register("solar_crystal_seed", () -> new SolarCrystalSeed(AbstractBlock.Properties
+    .create(Material.GLASS)
+    .sound(SoundType.GLASS)
+    .notSolid()));
+
+    public static final RegistryObject<LunarCrystalSeed> LUNAR_CRYSTAL_SEED = BLOCKS.register("lunar_crystal_seed", () -> new LunarCrystalSeed(AbstractBlock.Properties
+    .create(Material.GLASS)
+    .sound(SoundType.GLASS)
+    .notSolid()));
+
+    public static final RegistryObject<PyroCrystalSeed> PYRO_CRYSTAL_SEED = BLOCKS.register("pyro_crystal_seed", () -> new PyroCrystalSeed(AbstractBlock.Properties
+    .create(Material.GLASS)
+    .sound(SoundType.GLASS)
+    .notSolid()));
+
+    public static final RegistryObject<HydroCrystalSeed> HYDRO_CRYSTAL_SEED = BLOCKS.register("hydro_crystal_seed", () -> new HydroCrystalSeed(AbstractBlock.Properties
     .create(Material.GLASS)
     .sound(SoundType.GLASS)
     .notSolid()));
