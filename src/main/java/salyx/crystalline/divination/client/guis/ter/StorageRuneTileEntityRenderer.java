@@ -37,160 +37,169 @@ public class StorageRuneTileEntityRenderer extends TileEntityRenderer<StorageRun
     public void render(StorageRuneTile te, float partialTicks, MatrixStack matrixStackIn,
             IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
         ClientPlayerEntity player = mc.player;
-        int lightLevel = getLightLevel(te.getWorld(), te.getPos().up());
+        int lightLevel = getLightLevel(te.getWorld(), te.getPos());
         int redstoneLevel = te.getWorld().getRedstonePowerFromNeighbors(te.getPos());
         h = (Math.sin((Math.PI/1800)*((r)-900))+1)/2.4;
         float r1 = 360-(r/10);
-        if(te.getBlockState().toString().contains("down") && redstoneLevel == 0) {
+        double d = 1;
+        if(!te.getPos().withinDistance(player.getPosition(), 8)){
+            if(!te.getPos().withinDistance(player.getPosition(), 16)){
+                d = 0;
+            }
+            
+            else{d = 52/(te.getPos().distanceSq(player.getPosX(), player.getPosY(), player.getPosZ(), true)-8);}
+        }
+        if(d>0)
+        {if(te.getBlockState().toString().contains("down") && redstoneLevel == 0) {
             renderItem(ItemInit.STORAGE_RUNE.get().getDefaultInstance(), new double[] {0.5d, 0.5+h, 0.5d}, Vector3f.YP.rotationDegrees(r/10), Vector3f.XP.rotationDegrees(0),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 2f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (2*d));
             for(int cir = 0; cir<3; cir++) {
                 double h = ((float)cir/3.5)+0.22d;
             renderItem(te.getItem(9*cir+0), new double[] {0.5d, h, 0.5d}, Vector3f.YP.rotationDegrees(r1+45), Vector3f.XP.rotationDegrees(0),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+1), new double[] {0.3d, h+0.03, 0.3d}, Vector3f.YP.rotationDegrees(r1+0), Vector3f.XP.rotationDegrees(0),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+2), new double[] {1-0.3d, h+0.03, 0.3d}, Vector3f.YP.rotationDegrees(r1+0), Vector3f.XP.rotationDegrees(0),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+3), new double[] {1-0.3d, h+0.03, 1-0.3d}, Vector3f.YP.rotationDegrees(r1+0), Vector3f.XP.rotationDegrees(0),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+4), new double[] {0.3d, h+0.03, 1-0.3d}, Vector3f.YP.rotationDegrees(r1+0), Vector3f.XP.rotationDegrees(0),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+5), new double[] {0.5d, h-0.03, 0.2d}, Vector3f.YP.rotationDegrees(r1+45), Vector3f.XP.rotationDegrees(0),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+6), new double[] {1-0.2d, h-0.03, 0.5d}, Vector3f.YP.rotationDegrees(r1+45), Vector3f.XP.rotationDegrees(0),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+7), new double[] {0.5d, h-0.03, 1-0.2d}, Vector3f.YP.rotationDegrees(r1+45), Vector3f.XP.rotationDegrees(0),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+8), new double[] {0.2d, h-0.03, 0.5d}, Vector3f.YP.rotationDegrees(r1+45), Vector3f.XP.rotationDegrees(0),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             }
         }
         if(te.getBlockState().toString().contains("up") && redstoneLevel == 0) {
             renderItem(ItemInit.STORAGE_RUNE.get().getDefaultInstance(), new double[] {0.5d, 1.2-h, 0.5d}, Vector3f.YP.rotationDegrees(-r/10), Vector3f.XP.rotationDegrees(0),
-        matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 2f);
+        matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (2*d));
             for(int cir = 0; cir<3; cir++) {
                 double h = 1-((float)cir/3.5) - (0.22d);
             renderItem(te.getItem(9*cir+0), new double[] {0.5d, h, 0.5d}, Vector3f.YP.rotationDegrees(45-r1), Vector3f.XP.rotationDegrees(180),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+1), new double[] {0.3d, h+0.03, 0.3d}, Vector3f.YP.rotationDegrees(0-r1), Vector3f.XP.rotationDegrees(180),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+2), new double[] {1-0.3d, h+0.03, 0.3d}, Vector3f.YP.rotationDegrees(0-r1), Vector3f.XP.rotationDegrees(180),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+3), new double[] {1-0.3d, h+0.03, 1-0.3d}, Vector3f.YP.rotationDegrees(0-r1), Vector3f.XP.rotationDegrees(180),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+4), new double[] {0.3d, h+0.03, 1-0.3d}, Vector3f.YP.rotationDegrees(0-r1), Vector3f.XP.rotationDegrees(180),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+5), new double[] {0.5d, h-0.03, 0.2d}, Vector3f.YP.rotationDegrees(45-r1), Vector3f.XP.rotationDegrees(180),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+6), new double[] {1-0.2d, h-0.03, 0.5d}, Vector3f.YP.rotationDegrees(45-r1), Vector3f.XP.rotationDegrees(180),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+7), new double[] {0.5d, h-0.03, 1-0.2d}, Vector3f.YP.rotationDegrees(45-r1), Vector3f.XP.rotationDegrees(180),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+8), new double[] {0.2d, h-0.03, 0.5d}, Vector3f.YP.rotationDegrees(45-r1), Vector3f.XP.rotationDegrees(180),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             }
         }
         if(te.getBlockState().toString().contains("north") && redstoneLevel == 0) {
             renderItem(ItemInit.STORAGE_RUNE.get().getDefaultInstance(), new double[] {0.5d, 0.5d, 0.5d+h}, Vector3f.ZP.rotationDegrees(r/10), Vector3f.XP.rotationDegrees(90),
-        matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 2f);
+        matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (2*d));
             for(int cir = 0; cir<3; cir++) {
                 double h = 1-((float)(3-cir)/3.5) + (0.d);
             renderItem(te.getItem(9*cir+0), new double[] {0.5d, 0.5d, h}, Vector3f.ZP.rotationDegrees(r1+45), Vector3f.XP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+1), new double[] {0.3d, 0.3d, h+0.03}, Vector3f.ZP.rotationDegrees(r1+0), Vector3f.XP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+2), new double[] {1-0.3d, 0.3d, h+0.03}, Vector3f.ZP.rotationDegrees(r1+0), Vector3f.XP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+3), new double[] {1-0.3d, 1-0.3d, h+0.03}, Vector3f.ZP.rotationDegrees(r1+0), Vector3f.XP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+4), new double[] {0.3d, 1-0.3d, h+0.03}, Vector3f.ZP.rotationDegrees(r1+0), Vector3f.XP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+5), new double[] {0.5d, 0.2d, h-0.03}, Vector3f.ZP.rotationDegrees(r1+45), Vector3f.XP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+6), new double[] {1-0.2d, 0.5d, h-0.03}, Vector3f.ZP.rotationDegrees(r1+45), Vector3f.XP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+7), new double[] {0.5d, 1-0.2d, h-0.03}, Vector3f.ZP.rotationDegrees(r1+45), Vector3f.XP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+8), new double[] {0.2d, 0.5d, h-0.03}, Vector3f.ZP.rotationDegrees(r1+45), Vector3f.XP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             }
         }
         if(te.getBlockState().toString().contains("south") && redstoneLevel == 0) {
             renderItem(ItemInit.STORAGE_RUNE.get().getDefaultInstance(), new double[] {0.5d, 0.5d, 0.2d+(1-h)}, Vector3f.ZP.rotationDegrees(-r/10), Vector3f.XP.rotationDegrees(90),
-        matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 2f);
+        matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (2*d));
             for(int cir = 0; cir<3; cir++) {
                 double h = ((float)(3-cir)/3.5) - (0.08d);
             renderItem(te.getItem(9*cir+0), new double[] {0.5d, 0.5d, h}, Vector3f.ZP.rotationDegrees(45-r1), Vector3f.XP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+1), new double[] {0.3d, 0.3d, h+0.03}, Vector3f.ZP.rotationDegrees(0-r1), Vector3f.XP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+2), new double[] {1-0.3d, 0.3d, h+0.03}, Vector3f.ZP.rotationDegrees(0-r1), Vector3f.XP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+3), new double[] {1-0.3d, 1-0.3d, h+0.03}, Vector3f.ZP.rotationDegrees(0-r1), Vector3f.XP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+4), new double[] {0.3d, 1-0.3d, h+0.03}, Vector3f.ZP.rotationDegrees(0-r1), Vector3f.XP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+5), new double[] {0.5d, 0.2d, h-0.03}, Vector3f.ZP.rotationDegrees(45-r1), Vector3f.XP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+6), new double[] {1-0.2d, 0.5d, h-0.03}, Vector3f.ZP.rotationDegrees(45-r1), Vector3f.XP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+7), new double[] {0.5d, 1-0.2d, h-0.03}, Vector3f.ZP.rotationDegrees(45-r1), Vector3f.XP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+8), new double[] {0.2d, 0.5d, h-0.03}, Vector3f.ZP.rotationDegrees(45-r1), Vector3f.XP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             }
         }
         if(te.getBlockState().toString().contains("east") && redstoneLevel == 0) {
             renderItem(ItemInit.STORAGE_RUNE.get().getDefaultInstance(), new double[] {0.5d-h, 0.5d, 0.5d}, Vector3f.XP.rotationDegrees(r/10), Vector3f.ZP.rotationDegrees(90),
-        matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 2f);
+        matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (2*d));
             for(int cir = 0; cir<3; cir++) {
                 double h = 1-((float)cir/3.5) - (0.22d);
             renderItem(te.getItem(9*cir+0), new double[] {h, 0.5d, 0.5d}, Vector3f.XP.rotationDegrees(r1+45), Vector3f.ZP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+1), new double[] {h+0.03, 0.3d, 0.3d}, Vector3f.XP.rotationDegrees(r1+0), Vector3f.ZP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+2), new double[] {h+0.03, 0.3d, 1-0.3d}, Vector3f.XP.rotationDegrees(r1+0), Vector3f.ZP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+3), new double[] {h+0.03, 1-0.3d, 1-0.3d}, Vector3f.XP.rotationDegrees(r1+0), Vector3f.ZP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+4), new double[] {h+0.03, 1-0.3d, 0.3d}, Vector3f.XP.rotationDegrees(r1+0), Vector3f.ZP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+5), new double[] {h-0.03, 0.2d, 0.5d}, Vector3f.XP.rotationDegrees(r1+45), Vector3f.ZP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+6), new double[] {h-0.03, 0.5d, 1-0.2d}, Vector3f.XP.rotationDegrees(r1+45), Vector3f.ZP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+7), new double[] {h-0.03, 1-0.2d, 0.5d}, Vector3f.XP.rotationDegrees(r1+45), Vector3f.ZP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+8), new double[] {h-0.03, 0.5d, 0.2d}, Vector3f.XP.rotationDegrees(r1+45), Vector3f.ZP.rotationDegrees(90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             }
         }
         if(te.getBlockState().toString().contains("west") && redstoneLevel == 0) {
             renderItem(ItemInit.STORAGE_RUNE.get().getDefaultInstance(), new double[] {0.81d-(1-h), 0.5d, 0.5d}, Vector3f.XP.rotationDegrees(-r/10), Vector3f.ZP.rotationDegrees(90),
-        matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 2f);
+        matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (2*d));
             for(int cir = 0; cir<3; cir++) {
                 double h = ((float)cir/3.5) + (0.22d);
             renderItem(te.getItem(9*cir+0), new double[] {h, 0.5d, 0.5d}, Vector3f.XP.rotationDegrees(45-r1), Vector3f.ZP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+1), new double[] {h+0.03, 0.3d, 0.3d}, Vector3f.XP.rotationDegrees(0-r1), Vector3f.ZP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+2), new double[] {h+0.03, 0.3d, 1-0.3d}, Vector3f.XP.rotationDegrees(0-r1), Vector3f.ZP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+3), new double[] {h+0.03, 1-0.3d, 1-0.3d}, Vector3f.XP.rotationDegrees(0-r1), Vector3f.ZP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+4), new double[] {h+0.03, 1-0.3d, 0.3d}, Vector3f.XP.rotationDegrees(0-r1), Vector3f.ZP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+5), new double[] {h-0.03, 0.2d, 0.5d}, Vector3f.XP.rotationDegrees(45-r1), Vector3f.ZP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+6), new double[] {h-0.03, 0.5d, 1-0.2d}, Vector3f.XP.rotationDegrees(45-r1), Vector3f.ZP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+7), new double[] {h-0.03, 1-0.2d, 0.5d}, Vector3f.XP.rotationDegrees(45-r1), Vector3f.ZP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             renderItem(te.getItem(9*cir+8), new double[] {h-0.03, 0.5d, 0.2d}, Vector3f.XP.rotationDegrees(45-r1), Vector3f.ZP.rotationDegrees(-90),
-            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.4f);
+            matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.4*d));
             }
-        }
+        }}
         
         ITextComponent label = te.getItem(0).hasDisplayName() ? te.getItem(0).getDisplayName() :new TranslationTextComponent(te.getItem(0).getTranslationKey());
         if(player.getHeldItemMainhand().getItem() == ItemInit.ADVANCED_ITEM.get()) {

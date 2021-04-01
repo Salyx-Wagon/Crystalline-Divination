@@ -43,9 +43,18 @@ public class PedestalTileEntityRenderer extends TileEntityRenderer<PedestalTile>
             
             ClientPlayerEntity player = mc.player;
             int lightLevel = getLightLevel(te.getWorld(), te.getPos().up());
-            renderItem(te.getItem(), new double[] {0.5d, 1d, 0.5d}, Vector3f.YP.rotationDegrees(r/10),
-                matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, 0.8f);
-        
+            double d = 1;
+            if(!te.getPos().withinDistance(player.getPosition(), 8)){
+                if(!te.getPos().withinDistance(player.getPosition(), 16)){
+                    d = 0;
+                }
+                
+                else{d = 52/(te.getPos().distanceSq(player.getPosX(), player.getPosY(), player.getPosZ(), true)-8);}
+            }
+            if(d>0)
+            {renderItem(te.getItem(), new double[] {0.5d, 1d, 0.5d}, Vector3f.YP.rotationDegrees(r/10),
+                matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.8*d));
+            }
             ITextComponent label = te.getItem().hasDisplayName() ? te.getItem().getDisplayName() :new TranslationTextComponent(te.getItem().getTranslationKey());
             if(player.getHeldItemMainhand().getItem() == ItemInit.ADVANCED_ITEM.get()) {
                 renderLabel(matrixStackIn, bufferIn, lightLevel, new double[] {0.5d, 1.3d, 0.5d}, label , 0xffffff);   

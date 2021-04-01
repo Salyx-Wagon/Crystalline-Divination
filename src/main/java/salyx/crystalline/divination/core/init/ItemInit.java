@@ -229,4 +229,7 @@ public class ItemInit {
 
     public static final RegistryObject<BlockItem> STORAGE_RUNE = ITEMS.register("storage_rune", () -> new BlockItem(BlockInit.STORAGE_RUNE.get(), new Item.Properties()
     .group(ItemGroup.MATERIALS)));
+
+    public static final RegistryObject<BlockItem> EXPORT_RUNE = ITEMS.register("export_rune", () -> new BlockItem(BlockInit.EXPORT_RUNE.get(), new Item.Properties()
+    .group(ItemGroup.MATERIALS)));
 }

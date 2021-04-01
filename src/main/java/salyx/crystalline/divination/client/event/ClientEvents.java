@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import salyx.crystalline.divination.CrystalDiv;
 import salyx.crystalline.divination.client.guis.ter.BaseRuneTileEntityRenderer;
+import salyx.crystalline.divination.client.guis.ter.ExportRuneTileEntityRenderer;
 import salyx.crystalline.divination.client.guis.ter.PedestalTileEntityRenderer;
 import salyx.crystalline.divination.client.guis.ter.StorageRuneTileEntityRenderer;
 
@@ -24,16 +25,20 @@ public class ClientEvents {
     @SubscribeEvent
     public static void tick(final TickEvent event) {
         PedestalTileEntityRenderer.r ++;
-        if(PedestalTileEntityRenderer.r == 3600) {
+        if(PedestalTileEntityRenderer.r >= 3600) {
             PedestalTileEntityRenderer.r = 0;
         }
         StorageRuneTileEntityRenderer.r ++;
-        if(StorageRuneTileEntityRenderer.r == 3600) {
+        if(StorageRuneTileEntityRenderer.r >= 3600) {
             StorageRuneTileEntityRenderer.r = 0;
         }
         BaseRuneTileEntityRenderer.r ++;
-        if(BaseRuneTileEntityRenderer.r == 2000) {
+        if(BaseRuneTileEntityRenderer.r >= 2000) {
             BaseRuneTileEntityRenderer.r = 0;
+        }
+        ExportRuneTileEntityRenderer.r ++;
+        if(ExportRuneTileEntityRenderer.r >= 2000) {
+            ExportRuneTileEntityRenderer.r = 0;
         }
     }
 }

@@ -20,6 +20,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ChestTileEntity;
+//import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -139,7 +140,7 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
 
     private boolean updateRune(Supplier<Boolean> p_200109_1_) {
         if (this.world != null && !this.world.isRemote) {
-            if (!this.isOnTransferCooldown()) {
+            if (!this.isOnTransferCooldown() && this.getBlockState().get(ExportRune.ENABLED)) {
                 boolean flag = false;
                 if (!this.isEmpty()) {
                 flag = this.transferItemsOut();
