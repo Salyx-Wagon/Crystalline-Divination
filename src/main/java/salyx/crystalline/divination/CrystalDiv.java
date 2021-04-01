@@ -49,6 +49,7 @@ public class CrystalDiv
     private void doClientStuff(final FMLClientSetupEvent event) {
         RenderTypeLookup.setRenderLayer(BlockInit.BASE_RUNE.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(BlockInit.STORAGE_RUNE.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(BlockInit.EXPORT_RUNE.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(BlockInit.SOLAR_CRYSTAL_CLUSTER.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(BlockInit.LUNAR_CRYSTAL_CLUSTER.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(BlockInit.PYRO_CRYSTAL_CLUSTER.get(), RenderType.getTranslucent());

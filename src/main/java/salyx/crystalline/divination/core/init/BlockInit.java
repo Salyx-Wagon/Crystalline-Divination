@@ -11,6 +11,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import salyx.crystalline.divination.CrystalDiv;
 import salyx.crystalline.divination.common.blocks.BaseRune;
+import salyx.crystalline.divination.common.blocks.ExportRune;
 import salyx.crystalline.divination.common.blocks.Pedestal;
 import salyx.crystalline.divination.common.blocks.StorageRune;
 import salyx.crystalline.divination.common.blocks.HydroCrystalCluster;
@@ -100,5 +101,10 @@ public class BlockInit {
     public static final RegistryObject<HydroCrystalSeed> HYDRO_CRYSTAL_SEED = BLOCKS.register("hydro_crystal_seed", () -> new HydroCrystalSeed(AbstractBlock.Properties
     .create(Material.GLASS)
     .sound(SoundType.GLASS)
+    .notSolid()));
+
+    public static final RegistryObject<ExportRune> EXPORT_RUNE = BLOCKS.register("export_rune", () -> new ExportRune(AbstractBlock.Properties
+    .create(Material.GLASS)
+    .sound(SoundType.CLOTH)
     .notSolid()));
 }

@@ -38,6 +38,7 @@ public class CrystallineTablet extends Item{
             nbt.putInt("X", context.getPos().getX());
             nbt.putInt("Y", context.getPos().getY());
             nbt.putInt("Z", context.getPos().getZ());
+            //context.getPlayer().getHeldItemOffhand().write(nbt);
             context.getPlayer().getHeldItemMainhand().setTag(nbt);
         }
         return super.onItemUse(context);
@@ -58,6 +59,7 @@ public class CrystallineTablet extends Item{
                 TileEntity te = worldIn.getTileEntity(pos);
                 if(te instanceof StorageRuneTile && !worldIn.isRemote){
                     NetworkHooks.openGui((ServerPlayerEntity) playerIn, (StorageRuneTile) te, te.getPos());
+                    //System.out.println(ItemStack.read(nbt));
                 }
             }
         }
