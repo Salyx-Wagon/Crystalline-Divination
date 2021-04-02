@@ -77,8 +77,8 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
     public int getSourceZ(){
         return this.getTileData().getInt("sourceZ");
     }
-    public String getFilter(){
-        return this.getTileData().getString("filter");
+    public ItemStack getFilter(){
+        return ItemStack.read(this.getTileData().getCompound("itemFilter"));
     }
     public boolean getHasFilter(){
         return this.getTileData().getBoolean("hasFilter");
@@ -483,8 +483,8 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
         }
     } else {
         if (!itemstack.isEmpty() && canExtractItemFromSlot(inventoryIn, itemstack, index, direction) &&
-                ((rune.getIsWhiteList() && itemstack.getItem().getDefaultInstance().toString().equals(rune.getFilter())) ||
-                ((!rune.getIsWhiteList() && !itemstack.getItem().getDefaultInstance().toString().equals(rune.getFilter()))))) {
+                ((rune.getIsWhiteList() && itemstack.getItem().getDefaultInstance().isItemEqual(rune.getFilter().getItem().getDefaultInstance())) ||
+                ((!rune.getIsWhiteList() && !itemstack.getItem().getDefaultInstance().isItemEqual(rune.getFilter().getItem().getDefaultInstance()))))) {
             
             ItemStack itemstack1 = itemstack.copy();
             ItemStack itemstack2 = putStackInInventoryAllSlots(inventoryIn, rune, inventoryIn.decrStackSize(index, 1), (Direction)null);
@@ -495,9 +495,6 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
 
             inventoryIn.setInventorySlotContents(index, itemstack1);
         }
-        //System.out.println(rune.getIsWhiteList());
-        //System.out.println(itemstack.toString());
-        //System.out.println(rune.getFilter().toString());
     }
 
     return false;

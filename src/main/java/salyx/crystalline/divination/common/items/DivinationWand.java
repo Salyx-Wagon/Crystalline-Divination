@@ -100,7 +100,11 @@ public class DivinationWand extends Item{
             }
             else{
                 te.setHasFilter(true);
-                if(te.getFilter().equals(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance().toString())){
+                System.out.println(te.getFilter());
+                System.out.println(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance());
+                System.out.println(te.getFilter().getItem().getDefaultInstance().isItemEqual(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance()));
+                
+                if(te.getFilter().getItem().getDefaultInstance().isItemEqual(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance())){
                     te.setIsWhiteList(!te.getIsWhiteList());
                 }else{
                     te.setFilter(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance());
