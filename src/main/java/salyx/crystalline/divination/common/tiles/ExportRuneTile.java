@@ -55,6 +55,16 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
     public void setSourceZ(int z){
         this.getTileData().putInt("sourceZ", z);
     }
+    public void setFilter(ItemStack stack){
+        this.getTileData().put("itemFilter", stack.serializeNBT());
+        this.getTileData().putString("filter", stack.toString());
+    }
+    public void setHasFilter(boolean hasFilter){
+        this.getTileData().putBoolean("hasFilter", hasFilter);
+    }
+    public void setIsWhiteList(boolean whiteList){
+        this.getTileData().putBoolean("isWhiteList", whiteList);
+    }
     public boolean getHasSource(){
         return this.getTileData().getBoolean("hasSource");
     }
@@ -66,6 +76,15 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
     }
     public int getSourceZ(){
         return this.getTileData().getInt("sourceZ");
+    }
+    public String getFilter(){
+        return this.getTileData().getString("filter");
+    }
+    public boolean getHasFilter(){
+        return this.getTileData().getBoolean("hasFilter");
+    }
+    public boolean getIsWhiteList(){
+        return this.getTileData().getBoolean("isWhiteList");
     }
 
     public void read(BlockState state, CompoundNBT nbt) {
@@ -216,26 +235,26 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
     }
 
     /**
-        * Pull dropped {@link net.minecraft.entity.item.EntityItem EntityItem}s from the world above the hopper and items
-        * from any inventory attached to this hopper into the hopper's inventory.
-        * 
-        * @param hopper the hopper in question
-        * @return whether any items were successfully added to the hopper
-        */
-        public static boolean pullItems(ExportRuneTile rune) {
-            //return false;
-            //Boolean ret = net.minecraftforge.items.VanillaInventoryCodeHooks.extractHook((IHopper) rune);
-            //if (ret != null) return ret;
-            IInventory iinventory = getSourceInventory(rune);
-            if (iinventory != null) {
-               Direction direction = Direction.DOWN;
-               return isInventoryEmpty(iinventory, direction) ? false : func_213972_a(iinventory, direction).anyMatch((p_213971_3_) -> {
-                  return pullItemFromSlot(rune, iinventory, p_213971_3_, direction);
-               });
-            } else {
-               return false;
-            }
-         }
+    * Pull dropped {@link net.minecraft.entity.item.EntityItem EntityItem}s from the world above the hopper and items
+    * from any inventory attached to this hopper into the hopper's inventory.
+    * 
+    * @param hopper the hopper in question
+    * @return whether any items were successfully added to the hopper
+    */
+    public static boolean pullItems(ExportRuneTile rune) {
+        //return false;
+        //Boolean ret = net.minecraftforge.items.VanillaInventoryCodeHooks.extractHook((IHopper) rune);
+        //if (ret != null) return ret;
+        IInventory iinventory = getSourceInventory(rune);
+        if (iinventory != null) {
+            Direction direction = Direction.DOWN;
+            return isInventoryEmpty(iinventory, direction) ? false : func_213972_a(iinventory, direction).anyMatch((p_213971_3_) -> {
+                return pullItemFromSlot(rune, iinventory, p_213971_3_, direction);
+            });
+        } else {
+            return false;
+        }
+        }
 
     public static boolean captureItem(IInventory p_200114_0_, ItemEntity p_200114_1_) {
         return false;
@@ -451,15 +470,34 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
     }
     private static boolean pullItemFromSlot(ExportRuneTile rune, IInventory inventoryIn, int index, Direction direction) {
     ItemStack itemstack = inventoryIn.getStackInSlot(index);
-    if (!itemstack.isEmpty() && canExtractItemFromSlot(inventoryIn, itemstack, index, direction)) {
-        ItemStack itemstack1 = itemstack.copy();
-        ItemStack itemstack2 = putStackInInventoryAllSlots(inventoryIn, rune, inventoryIn.decrStackSize(index, 1), (Direction)null);
-        if (itemstack2.isEmpty()) {
-            inventoryIn.markDirty();
-            return true;
-        }
+    if(!rune.getHasFilter()){
+        if (!itemstack.isEmpty() && canExtractItemFromSlot(inventoryIn, itemstack, index, direction)) {
+            ItemStack itemstack1 = itemstack.copy();
+            ItemStack itemstack2 = putStackInInventoryAllSlots(inventoryIn, rune, inventoryIn.decrStackSize(index, 1), (Direction)null);
+            if (itemstack2.isEmpty()) {
+                inventoryIn.markDirty();
+                return true;
+            }
 
-        inventoryIn.setInventorySlotContents(index, itemstack1);
+            inventoryIn.setInventorySlotContents(index, itemstack1);
+        }
+    } else {
+        if (!itemstack.isEmpty() && canExtractItemFromSlot(inventoryIn, itemstack, index, direction) &&
+                ((rune.getIsWhiteList() && itemstack.getItem().getDefaultInstance().toString().equals(rune.getFilter())) ||
+                ((!rune.getIsWhiteList() && !itemstack.getItem().getDefaultInstance().toString().equals(rune.getFilter()))))) {
+            
+            ItemStack itemstack1 = itemstack.copy();
+            ItemStack itemstack2 = putStackInInventoryAllSlots(inventoryIn, rune, inventoryIn.decrStackSize(index, 1), (Direction)null);
+            if (itemstack2.isEmpty()) {
+                inventoryIn.markDirty();
+                return true;
+            }
+
+            inventoryIn.setInventorySlotContents(index, itemstack1);
+        }
+        //System.out.println(rune.getIsWhiteList());
+        //System.out.println(itemstack.toString());
+        //System.out.println(rune.getFilter().toString());
     }
 
     return false;

@@ -2,6 +2,7 @@ package salyx.crystalline.divination.common.items;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -15,6 +16,7 @@ import salyx.crystalline.divination.core.init.BlockInit;
 import salyx.crystalline.divination.core.init.ItemInit;
 
 public class DivinationWand extends Item{
+    public int cooldown = 0;
 
     public DivinationWand(Properties properties) {
         super(properties.maxStackSize(1));
@@ -89,7 +91,22 @@ public class DivinationWand extends Item{
             if(nbt.contains("Y")) {nbt.remove("Y");}
             if(nbt.contains("Z")) {nbt.remove("Z");}
         }
-
+        else if((context.getWorld().getTileEntity(context.getPos()) instanceof ExportRuneTile) && cooldown == 0){
+            cooldown += 5;
+            ExportRuneTile te = (ExportRuneTile) context.getWorld().getTileEntity(context.getPos());
+            if(context.getPlayer().getHeldItemOffhand().isEmpty()){
+                te.setHasFilter(false);
+                te.setFilter(ItemStack.EMPTY);
+            }
+            else{
+                te.setHasFilter(true);
+                if(te.getFilter().equals(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance().toString())){
+                    te.setIsWhiteList(!te.getIsWhiteList());
+                }else{
+                    te.setFilter(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance());
+                }
+            } 
+        }
         return super.onItemUse(context);
     }
 }

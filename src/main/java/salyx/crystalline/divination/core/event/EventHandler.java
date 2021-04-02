@@ -25,6 +25,7 @@ import salyx.crystalline.divination.CrystalDiv;
 import salyx.crystalline.divination.common.blocks.BaseRune;
 import salyx.crystalline.divination.common.blocks.Pedestal;
 import salyx.crystalline.divination.common.blocks.Rune;
+import salyx.crystalline.divination.common.items.DivinationWand;
 import salyx.crystalline.divination.core.init.BlockInit;
 //import salyx.crystalline.divination.core.init.BlockInit;
 import salyx.crystalline.divination.core.init.ItemInit;
@@ -60,6 +61,11 @@ public class EventHandler {
     
     @SubscribeEvent
     public static void onPlayerTickEvent(final PlayerTickEvent event) {
+        // Wand
+        if(event.player.getHeldItemMainhand().getItem() instanceof DivinationWand){
+            DivinationWand itemWand = (DivinationWand) event.player.getHeldItemMainhand().getItem();
+            if(itemWand.cooldown > 0){-- itemWand.cooldown;}
+        }
         // Solar Armor
         if(event.player.isSprinting()) {
             if(event.player.inventory.armorItemInSlot(0).isItemEqualIgnoreDurability(ItemInit.SOLAR_CRYSTAL_BOOTS.get().getDefaultInstance())) {
