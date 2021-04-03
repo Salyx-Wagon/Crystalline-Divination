@@ -1,18 +1,13 @@
 # Crystalline-Divination
  A Minecraft Forge mod for 1.16.4/5 that is under heavy devolpement.
 
-v0.7
+v0.8
 
 Changelog
 *********
-+You can now shift-click items out of the base rune and pedestal with an empty hand.
-
-+All crystal types are now renewable, each requires a specific growing condition.
-
-~You must right-click items into the pedestal, the GUI is no longer accessible.
-
-~Updated item rendering for base runes and storage runes.
-
++ Added Export Rune
++ Added Import Rune
+~ Updated Rendering of runes
 
 Features
 ********
@@ -80,3 +75,18 @@ Player Guide
 
 - The Crystalline Tablet is crafted with glass pane, solar crystal, lunar crystal, pyro crystal, hydro crystal.
 	- You can shift + right-click a storage rune with the tablet to link it, then you can access that storage rune with the tablet as long as you're within 128 blocks.
+
+- The export rune is crafted with ...
+	- The export rune is used to export items from a (storage) rune to any other block inventory. 
+	- Place the rune on the side of the block you want to export to, then shift-click the rune you're exporting from with your
+	divination wand, then shift-click the export rune. 
+
+- The import rune is crafted with ...
+	- The import rune is used to import items to a (storage) rune from any other block inventory. 
+	- Place the rune on the side of the block you want to import from, then shift-click the rune you're importing to with your
+	divination wand, then shift-click the import rune. 
+** Item filters for the import and export runes
+	- You can filter both runes the same way. Have the item you're filtering in your offand whilst you right-click the rune with
+	the divination wand. Click again with the same item in your offhand to toggle between whitelisting and blacklisting (as seen by
+	black or white text that's shown when you hold the wand). To remove the filter just right-click the rune with the wand with 
+	nothing in your offhand.
