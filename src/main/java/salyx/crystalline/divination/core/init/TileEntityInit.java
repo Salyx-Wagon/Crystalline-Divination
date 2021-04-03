@@ -9,6 +9,7 @@ import salyx.crystalline.divination.common.tiles.PedestalTile;
 import salyx.crystalline.divination.common.tiles.BaseRuneTile;
 import salyx.crystalline.divination.common.tiles.StorageRuneTile;
 import salyx.crystalline.divination.common.tiles.ExportRuneTile;
+import salyx.crystalline.divination.common.tiles.ImportRuneTile;
 
 public class TileEntityInit {
     
@@ -27,5 +28,8 @@ public class TileEntityInit {
     
     public static final RegistryObject<TileEntityType<ExportRuneTile>> EXPORT_RUNE_TILE_TYPE = TILE_ENTITY_TYPE
     .register("export_rune_tile_type", () -> TileEntityType.Builder.create(ExportRuneTile::new, BlockInit.EXPORT_RUNE.get()).build(null));
+    
+    public static final RegistryObject<TileEntityType<ImportRuneTile>> IMPORT_RUNE_TILE_TYPE = TILE_ENTITY_TYPE
+    .register("import_rune_tile_type", () -> TileEntityType.Builder.create(ImportRuneTile::new, BlockInit.IMPORT_RUNE.get()).build(null));
     
 }

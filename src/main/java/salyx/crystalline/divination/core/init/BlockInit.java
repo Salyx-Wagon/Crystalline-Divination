@@ -16,6 +16,7 @@ import salyx.crystalline.divination.common.blocks.Pedestal;
 import salyx.crystalline.divination.common.blocks.StorageRune;
 import salyx.crystalline.divination.common.blocks.HydroCrystalCluster;
 import salyx.crystalline.divination.common.blocks.HydroCrystalSeed;
+import salyx.crystalline.divination.common.blocks.ImportRune;
 import salyx.crystalline.divination.common.blocks.LunarCrystalCluster;
 import salyx.crystalline.divination.common.blocks.LunarCrystalSeed;
 import salyx.crystalline.divination.common.blocks.PyroCrystalCluster;
@@ -104,6 +105,11 @@ public class BlockInit {
     .notSolid()));
 
     public static final RegistryObject<ExportRune> EXPORT_RUNE = BLOCKS.register("export_rune", () -> new ExportRune(AbstractBlock.Properties
+    .create(Material.GLASS)
+    .sound(SoundType.CLOTH)
+    .notSolid()));
+
+    public static final RegistryObject<ImportRune> IMPORT_RUNE = BLOCKS.register("import_rune", () -> new ImportRune(AbstractBlock.Properties
     .create(Material.GLASS)
     .sound(SoundType.CLOTH)
     .notSolid()));

@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import salyx.crystalline.divination.common.blocks.StorageRune;
 import salyx.crystalline.divination.common.tiles.BaseRuneTile;
 import salyx.crystalline.divination.common.tiles.ExportRuneTile;
+import salyx.crystalline.divination.common.tiles.ImportRuneTile;
 import salyx.crystalline.divination.common.tiles.StorageRuneTile;
 import salyx.crystalline.divination.core.init.BlockInit;
 import salyx.crystalline.divination.core.init.ItemInit;
@@ -79,6 +80,25 @@ public class DivinationWand extends Item{
                 }
             }
         }
+        else if(context.getPlayer().isSneaking() && context.getWorld().getTileEntity(context.getPos()) instanceof ImportRuneTile){
+            CompoundNBT nbt;
+            ImportRuneTile te = (ImportRuneTile) context.getWorld().getTileEntity(context.getPos());
+            if(context.getPlayer().getHeldItemMainhand().hasTag()) {
+                nbt = context.getPlayer().getHeldItemMainhand().getTag();
+            }
+            else {
+                nbt = new CompoundNBT();
+            }
+            if(nbt.contains("X") && nbt.contains("Y") && nbt.contains("Z")){
+                BlockPos sourcePos = new BlockPos(nbt.getInt("X"), nbt.getInt("Y"), nbt.getInt("Z"));
+                if(sourcePos.withinDistance(te.getPos(), 64)) {
+                    te.setDestX(nbt.getInt("X"));
+                    te.setDestY(nbt.getInt("Y"));
+                    te.setDestZ(nbt.getInt("Z"));
+                    te.setHasDest(true);
+                }
+            }
+        }
         else if(context.getPlayer().isSneaking()){
             CompoundNBT nbt;
             if(context.getPlayer().getHeldItemMainhand().hasTag()) {
@@ -91,26 +111,41 @@ public class DivinationWand extends Item{
             if(nbt.contains("Y")) {nbt.remove("Y");}
             if(nbt.contains("Z")) {nbt.remove("Z");}
         }
-        else if((context.getWorld().getTileEntity(context.getPos()) instanceof ExportRuneTile) && cooldown == 0){
-            cooldown += 5;
+        else if((context.getWorld().getTileEntity(context.getPos()) instanceof ExportRuneTile) && cooldown == 0 && context.getWorld().isRemote()){
             ExportRuneTile te = (ExportRuneTile) context.getWorld().getTileEntity(context.getPos());
             if(context.getPlayer().getHeldItemOffhand().isEmpty()){
-                te.setHasFilter(false);
-                te.setFilter(ItemStack.EMPTY);
+                te.getTileData().putBoolean("clientHasFilter", false);
+                te.getTileData().put("itemFilter1", ItemStack.EMPTY.serializeNBT());
             }
             else{
-                te.setHasFilter(true);
-                System.out.println(te.getFilter());
-                System.out.println(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance());
-                System.out.println(te.getFilter().getItem().getDefaultInstance().isItemEqual(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance()));
-                
-                if(te.getFilter().getItem().getDefaultInstance().isItemEqual(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance())){
-                    te.setIsWhiteList(!te.getIsWhiteList());
+                te.getTileData().putBoolean("clientHasFilter", true);
+                ItemStack filterItem = ItemStack.read(te.getTileData().getCompound("itemFilter1"));
+                if(filterItem.isItemEqual(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance())){
+                    te.getTileData().putBoolean("clientIsWhitelist", !te.getTileData().getBoolean("clientIsWhitelist"));
                 }else{
-                    te.setFilter(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance());
+                    te.getTileData().put("itemFilter1", context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance().serializeNBT());
                 }
-            } 
+            }
+            
         }
+        else if((context.getWorld().getTileEntity(context.getPos()) instanceof ImportRuneTile) && cooldown == 0 && context.getWorld().isRemote()){
+            ImportRuneTile te = (ImportRuneTile) context.getWorld().getTileEntity(context.getPos());
+            if(context.getPlayer().getHeldItemOffhand().isEmpty()){
+                te.getTileData().putBoolean("clientHasFilter", false);
+                te.getTileData().put("itemFilter1", ItemStack.EMPTY.serializeNBT());
+            }
+            else{
+                te.getTileData().putBoolean("clientHasFilter", true);
+                ItemStack filterItem = ItemStack.read(te.getTileData().getCompound("itemFilter1"));
+                if(filterItem.isItemEqual(context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance())){
+                    te.getTileData().putBoolean("clientIsWhitelist", !te.getTileData().getBoolean("clientIsWhitelist"));
+                }else{
+                    te.getTileData().put("itemFilter1", context.getPlayer().getHeldItemOffhand().getItem().getDefaultInstance().serializeNBT());
+                }
+            }
+            
+        }
+
         return super.onItemUse(context);
     }
 }

@@ -232,4 +232,7 @@ public class ItemInit {
 
     public static final RegistryObject<BlockItem> EXPORT_RUNE = ITEMS.register("export_rune", () -> new BlockItem(BlockInit.EXPORT_RUNE.get(), new Item.Properties()
     .group(ItemGroup.MATERIALS)));
+
+    public static final RegistryObject<BlockItem> IMPORT_RUNE = ITEMS.register("import_rune", () -> new BlockItem(BlockInit.IMPORT_RUNE.get(), new Item.Properties()
+    .group(ItemGroup.MATERIALS)));
 }

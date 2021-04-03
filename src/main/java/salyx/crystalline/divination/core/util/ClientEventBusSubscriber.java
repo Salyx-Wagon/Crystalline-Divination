@@ -13,6 +13,7 @@ import salyx.crystalline.divination.client.guis.PedestalBlockScreen;
 import salyx.crystalline.divination.client.guis.StorageRuneScreen;
 import salyx.crystalline.divination.client.guis.ter.BaseRuneTileEntityRenderer;
 import salyx.crystalline.divination.client.guis.ter.ExportRuneTileEntityRenderer;
+import salyx.crystalline.divination.client.guis.ter.ImportRuneTileEntityRenderer;
 import salyx.crystalline.divination.client.guis.ter.PedestalTileEntityRenderer;
 import salyx.crystalline.divination.client.guis.ter.StorageRuneTileEntityRenderer;
 import salyx.crystalline.divination.core.init.ContainerTypeInit;
@@ -31,6 +32,7 @@ public class ClientEventBusSubscriber {
         ClientRegistry.bindTileEntityRenderer(TileEntityInit.BASE_RUNE_TILE_TYPE.get(), BaseRuneTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityInit.STORAGE_RUNE_TILE_TYPE.get(), StorageRuneTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityInit.EXPORT_RUNE_TILE_TYPE.get(), ExportRuneTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(TileEntityInit.IMPORT_RUNE_TILE_TYPE.get(), ImportRuneTileEntityRenderer::new);
         
     }
 }

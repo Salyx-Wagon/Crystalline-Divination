@@ -20,21 +20,21 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import salyx.crystalline.divination.common.tiles.ExportRuneTile;
+import salyx.crystalline.divination.common.tiles.ImportRuneTile;
 import salyx.crystalline.divination.core.init.ItemInit;
 
-public class ExportRuneTileEntityRenderer extends TileEntityRenderer<ExportRuneTile>{
+public class ImportRuneTileEntityRenderer extends TileEntityRenderer<ImportRuneTile>{
     private Minecraft mc = Minecraft.getInstance();
 
-    public static float r = 0;
+    public static float r = 2000;
     private double h;
 
-    public ExportRuneTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
+    public ImportRuneTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
     }
 
     @Override
-    public void render(ExportRuneTile te, float partialTicks, MatrixStack matrixStackIn,
+    public void render(ImportRuneTile te, float partialTicks, MatrixStack matrixStackIn,
             IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
         ClientPlayerEntity player = mc.player;
         int lightLevel = getLightLevel(te.getWorld(), te.getPos());
@@ -47,9 +47,9 @@ public class ExportRuneTileEntityRenderer extends TileEntityRenderer<ExportRuneT
             
             else{d = 52/(te.getPos().distanceSq(player.getPosX(), player.getPosY(), player.getPosZ(), true)-8);}
         }
-        if(d>0)
+        if(d>0 && te.getWorld().isRemote())
         {if(te.getBlockState().toString().contains("down")) {
-            renderItem(ItemInit.EXPORT_RUNE.get().getDefaultInstance(), new double[] {0.5d, 0.35+h, 0.5d}, Vector3f.YP.rotationDegrees((float) (r/5.555)), Vector3f.XP.rotationDegrees(0),
+            renderItem(ItemInit.IMPORT_RUNE.get().getDefaultInstance(), new double[] {0.5d, 0.35+h, 0.5d}, Vector3f.YP.rotationDegrees((float) (r/5.555)), Vector3f.XP.rotationDegrees(0),
             matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (((0.5-((float) h))*4)*d));
 
             ItemStack itemStack = ItemStack.read(te.getTileData().getCompound("itemFilter1"));
@@ -57,7 +57,7 @@ public class ExportRuneTileEntityRenderer extends TileEntityRenderer<ExportRuneT
             matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (0.6*d));
         }
         if(te.getBlockState().toString().contains("up")) {
-            renderItem(ItemInit.EXPORT_RUNE.get().getDefaultInstance(), new double[] {0.5d, 1.33-(h*2.4), 0.5d}, Vector3f.YP.rotationDegrees(-(float) (r/5.555)+180), Vector3f.XP.rotationDegrees(0),
+            renderItem(ItemInit.IMPORT_RUNE.get().getDefaultInstance(), new double[] {0.5d, 1.33-(h*2.4), 0.5d}, Vector3f.YP.rotationDegrees(-(float) (r/5.555)+180), Vector3f.XP.rotationDegrees(0),
             matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (((0.5-((float) h))*4)*d));
             
             ItemStack itemStack = ItemStack.read(te.getTileData().getCompound("itemFilter1"));
@@ -66,7 +66,7 @@ public class ExportRuneTileEntityRenderer extends TileEntityRenderer<ExportRuneT
             
         }
         if(te.getBlockState().toString().contains("north")) {
-            renderItem(ItemInit.EXPORT_RUNE.get().getDefaultInstance(), new double[] {0.5d, 0.5d, 0.35d+h}, Vector3f.ZP.rotationDegrees((float) (r/5.555)), Vector3f.XP.rotationDegrees(90),
+            renderItem(ItemInit.IMPORT_RUNE.get().getDefaultInstance(), new double[] {0.5d, 0.5d, 0.35d+h}, Vector3f.ZP.rotationDegrees((float) (r/5.555)), Vector3f.XP.rotationDegrees(90),
             matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (((0.5-((float) h))*4)*d));
             
             ItemStack itemStack = ItemStack.read(te.getTileData().getCompound("itemFilter1"));
@@ -75,9 +75,8 @@ public class ExportRuneTileEntityRenderer extends TileEntityRenderer<ExportRuneT
             
         }
         if(te.getBlockState().toString().contains("south")) {
-            renderItem(ItemInit.EXPORT_RUNE.get().getDefaultInstance(), new double[] {0.5d, 0.5d, 1.34d-(h*2.4)}, Vector3f.ZP.rotationDegrees(-(float) (r/5.555)), Vector3f.XP.rotationDegrees(90),
+            renderItem(ItemInit.IMPORT_RUNE.get().getDefaultInstance(), new double[] {0.5d, 0.5d, 1.34d-(h*2.4)}, Vector3f.ZP.rotationDegrees(-(float) (r/5.555)), Vector3f.XP.rotationDegrees(90),
             matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (((0.5-((float) h))*4)*d));
-            
             
             ItemStack itemStack = ItemStack.read(te.getTileData().getCompound("itemFilter1"));
             renderItem(itemStack, new double[] {0.5d, 0.5, 1-0.2}, Vector3f.YP.rotationDegrees(0), Vector3f.XP.rotationDegrees(-90),
@@ -85,7 +84,7 @@ public class ExportRuneTileEntityRenderer extends TileEntityRenderer<ExportRuneT
             
         }
         if(te.getBlockState().toString().contains("east")) {
-            renderItem(ItemInit.EXPORT_RUNE.get().getDefaultInstance(), new double[] {0.65d-h, 0.5d, 0.5d}, Vector3f.XP.rotationDegrees((float) (r/5.555)+90), Vector3f.ZP.rotationDegrees(90),
+            renderItem(ItemInit.IMPORT_RUNE.get().getDefaultInstance(), new double[] {0.65d-h, 0.5d, 0.5d}, Vector3f.XP.rotationDegrees((float) (r/5.555)+90), Vector3f.ZP.rotationDegrees(90),
             matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (((0.5-((float) h))*4)*d));
             
             ItemStack itemStack = ItemStack.read(te.getTileData().getCompound("itemFilter1"));
@@ -94,7 +93,7 @@ public class ExportRuneTileEntityRenderer extends TileEntityRenderer<ExportRuneT
             
         }
         if(te.getBlockState().toString().contains("west")) {
-            renderItem(ItemInit.EXPORT_RUNE.get().getDefaultInstance(), new double[] {-0.34d+(h*2.4), 0.5d, 0.5d}, Vector3f.XP.rotationDegrees(-(float) (r/5.555)), Vector3f.ZP.rotationDegrees(90),
+            renderItem(ItemInit.IMPORT_RUNE.get().getDefaultInstance(), new double[] {-0.34d+(h*2.4), 0.5d, 0.5d}, Vector3f.XP.rotationDegrees(-(float) (r/5.555)), Vector3f.ZP.rotationDegrees(90),
             matrixStackIn, bufferIn, partialTicks, combinedOverlayIn, lightLevel, (float) (((0.5-((float) h))*4)*d));
             
             ItemStack itemStack = ItemStack.read(te.getTileData().getCompound("itemFilter1"));

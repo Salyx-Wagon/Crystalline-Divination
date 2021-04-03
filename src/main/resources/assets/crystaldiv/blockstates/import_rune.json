@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=north": { "model": "crystaldiv:block/import_rune" },
+        "facing=south": { "model": "crystaldiv:block/import_rune", "y": 180 },
+        "facing=west":  { "model": "crystaldiv:block/import_rune", "y": 270 },
+        "facing=east":  { "model": "crystaldiv:block/import_rune", "y": 90 },
+        "facing=up": { "model": "crystaldiv:block/import_rune", "x": 270 },
+        "facing=down": { "model": "crystaldiv:block/import_rune", "x": 90 }
+    }
+}

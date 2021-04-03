@@ -17,13 +17,13 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import salyx.crystalline.divination.common.items.DivinationWand;
-import salyx.crystalline.divination.common.tiles.ExportRuneTile;
+import salyx.crystalline.divination.common.tiles.ImportRuneTile;
 import salyx.crystalline.divination.core.init.TileEntityInit;
 
-public class ExportRune extends Rune{
+public class ImportRune extends Rune{
     public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
 
-    public ExportRune(Properties properties) {
+    public ImportRune(Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(ENABLED, Boolean.valueOf(true)));
     }
@@ -35,7 +35,7 @@ public class ExportRune extends Rune{
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         // TODO Auto-generated method stub
-        return TileEntityInit.EXPORT_RUNE_TILE_TYPE.get().create();
+        return TileEntityInit.IMPORT_RUNE_TILE_TYPE.get().create();
     }
     @SuppressWarnings( "deprecation" )
     @Override
@@ -43,8 +43,8 @@ public class ExportRune extends Rune{
         // TODO Auto-generated method stub
         if(!state.isIn(newState.getBlock())) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if(tileEntity instanceof ExportRuneTile) {
-                InventoryHelper.dropInventoryItems(worldIn, pos, (ExportRuneTile)tileEntity);
+            if(tileEntity instanceof ImportRuneTile) {
+                InventoryHelper.dropInventoryItems(worldIn, pos, (ImportRuneTile)tileEntity);
             }
         }
         super.onReplaced(state, worldIn, pos, newState, isMoving);
@@ -60,11 +60,12 @@ public class ExportRune extends Rune{
         builder.add(ENABLED);
     }
     private void updateState(World worldIn, BlockPos pos, BlockState state) {
-        boolean flag = !worldIn.isBlockPowered(pos);
-        if (flag != state.get(ENABLED)) {
-           worldIn.setBlockState(pos, state.with(ENABLED, Boolean.valueOf(flag)), 4);
+        if(worldIn.getTileEntity(pos) instanceof ImportRuneTile){
+            boolean flag = !worldIn.isBlockPowered(pos);
+            if (flag != state.get(ENABLED)) {
+            worldIn.setBlockState(pos, state.with(ENABLED, Boolean.valueOf(flag)), 4);
+            }
         }
-  
     }
 
     @Override
@@ -85,7 +86,7 @@ public class ExportRune extends Rune{
             Hand handIn, BlockRayTraceResult hit) {
         if((player.getHeldItemMainhand().getItem() instanceof DivinationWand) && !worldIn.isRemote()){
             DivinationWand wand = (DivinationWand) player.getHeldItemMainhand().getItem();
-            ExportRuneTile te = (ExportRuneTile) worldIn.getTileEntity(pos);
+            ImportRuneTile te = (ImportRuneTile) worldIn.getTileEntity(pos);
             if(player.getHeldItemOffhand().isEmpty()){
                 te.getTileData().putBoolean("hasFilter", false);
                 te.getTileData().put("itemFilter", ItemStack.EMPTY.serializeNBT());

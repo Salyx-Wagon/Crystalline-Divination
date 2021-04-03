@@ -20,7 +20,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ChestTileEntity;
-//import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -32,52 +31,39 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import salyx.crystalline.divination.common.blocks.ExportRune;
+import salyx.crystalline.divination.common.blocks.ImportRune;
 import salyx.crystalline.divination.core.init.TileEntityInit;
 
-public class ExportRuneTile extends LockableLootTileEntity implements ITickableTileEntity{
+public class ImportRuneTile extends LockableLootTileEntity implements ITickableTileEntity{
     private NonNullList<ItemStack> inventory = NonNullList.withSize(1, ItemStack.EMPTY);
     private int transferCooldown = -1;
     private long tickedGameTime;
 
-    public ExportRuneTile() {
-        super(TileEntityInit.EXPORT_RUNE_TILE_TYPE.get());
+    public ImportRuneTile() {
+        super(TileEntityInit.IMPORT_RUNE_TILE_TYPE.get());
     }
-    public void setHasSource(boolean hasSource){
+    public void setHasDest(boolean hasSource){
         this.getTileData().putBoolean("hasSource", hasSource);
-        this.markDirty();
     }
-    public void setSourceX(int x){
+    public void setDestX(int x){
         this.getTileData().putInt("sourceX", x);
-        this.markDirty();
     }
-    public void setSourceY(int y){
+    public void setDestY(int y){
         this.getTileData().putInt("sourceY", y);
-        this.markDirty();
     }
-    public void setSourceZ(int z){
+    public void setDestZ(int z){
         this.getTileData().putInt("sourceZ", z);
-        this.markDirty();
     }
-    public void setFilter(ItemStack stack){
-        this.getTileData().put("itemFilter", stack.serializeNBT());
-    }
-    public void setHasFilter(boolean hasFilter){
-        this.getTileData().putBoolean("hasFilter", hasFilter);
-    }
-    public void setIsWhiteList(boolean whiteList){
-        this.getTileData().putBoolean("isWhiteList", whiteList);
-    }
-    public boolean getHasSource(){
+    public boolean getHasDest(){
         return this.getTileData().getBoolean("hasSource");
     }
-    public int getSourceX(){
+    public int getDestX(){
         return this.getTileData().getInt("sourceX");
     }
-    public int getSourceY(){
+    public int getDestY(){
         return this.getTileData().getInt("sourceY");
     }
-    public int getSourceZ(){
+    public int getDestZ(){
         return this.getTileData().getInt("sourceZ");
     }
 
@@ -129,17 +115,18 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
     }
 
     protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.export_rune");
+        return new TranslationTextComponent("container.import_rune");
     }
 
     public void tick() {
         if (this.world != null && !this.world.isRemote) {
-            if(this.getHasSource()){
-                BlockPos sourcePos = new BlockPos(this.getSourceX(), this.getSourceY(), this.getSourceZ());
+            if(this.getHasDest()){
+                BlockPos sourcePos = new BlockPos(this.getDestX(), this.getDestY(), this.getDestZ());
                 if(!(this.world.getTileEntity(sourcePos) instanceof StorageRuneTile)){
-                    this.setHasSource(false);
+                    this.setHasDest(false);
                 }
             }
+            
             --this.transferCooldown;
             this.tickedGameTime = this.world.getGameTime();
             if (!this.isOnTransferCooldown()) {
@@ -153,7 +140,7 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
 
     private boolean updateRune(Supplier<Boolean> p_200109_1_) {
         if (this.world != null && !this.world.isRemote) {
-            if (!this.isOnTransferCooldown() && this.getBlockState().get(ExportRune.ENABLED)) {
+            if (!this.isOnTransferCooldown() && this.getBlockState().get(ImportRune.ENABLED)) {
                 boolean flag = false;
                 if (!this.isEmpty()) {
                 flag = this.transferItemsOut();
@@ -192,14 +179,13 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
         if (iinventory == null) {
             return false;
         } else {
-            Direction direction = this.getBlockState().get(ExportRune.FACING).getOpposite();
-            if (this.isInventoryFull(iinventory, direction)) {
+            if (this.isInventoryFull(iinventory, null)) {
                 return false;
             } else {
                 for(int i = 0; i < this.getSizeInventory(); ++i) {
                     if (!this.getStackInSlot(i).isEmpty()) {
                         ItemStack itemstack = this.getStackInSlot(i).copy();
-                        ItemStack itemstack1 = putStackInInventoryAllSlots(this, iinventory, this.decrStackSize(i, 1), direction);
+                        ItemStack itemstack1 = putStackInInventoryAllSlots(this, iinventory, this.decrStackSize(i, 1), null);
                         if (itemstack1.isEmpty()) {
                             iinventory.markDirty();
                             return true;
@@ -235,20 +221,17 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
     * @param hopper the hopper in question
     * @return whether any items were successfully added to the hopper
     */
-    public static boolean pullItems(ExportRuneTile rune) {
-        //return false;
-        //Boolean ret = net.minecraftforge.items.VanillaInventoryCodeHooks.extractHook((IHopper) rune);
-        //if (ret != null) return ret;
+    public static boolean pullItems(ImportRuneTile rune) {
         IInventory iinventory = getSourceInventory(rune);
         if (iinventory != null) {
-            Direction direction = rune.getBlockState().get(ExportRune.FACING);
+            Direction direction = rune.getBlockState().get(ImportRune.FACING).getOpposite();
             return isInventoryEmpty(iinventory, direction) ? false : func_213972_a(iinventory, direction).anyMatch((p_213971_3_) -> {
                 return pullItemFromSlot(rune, iinventory, p_213971_3_, direction);
             });
         } else {
             return false;
         }
-        }
+    }
 
     public static boolean captureItem(IInventory p_200114_0_, ItemEntity p_200114_1_) {
         return false;
@@ -308,12 +291,12 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
             }
 
             if (flag) {
-                if (flag1 && destination instanceof ExportRuneTile) {
-                ExportRuneTile runetile1 = (ExportRuneTile)destination;
+                if (flag1 && destination instanceof ImportRuneTile) {
+                ImportRuneTile runetile1 = (ImportRuneTile)destination;
                 if (!runetile1.mayTransfer()) {
                     int k = 0;
-                    if (source instanceof ExportRuneTile) {
-                        ExportRuneTile runetile = (ExportRuneTile)source;
+                    if (source instanceof ImportRuneTile) {
+                        ImportRuneTile runetile = (ImportRuneTile)source;
                         if (runetile1.tickedGameTime >= runetile.tickedGameTime) {
                             k = 1;
                         }
@@ -335,17 +318,18 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
         */
     @Nullable
     private IInventory getInventoryForRuneTransfer() {
-        Direction direction = this.getBlockState().get(ExportRune.FACING);
-        return getInventoryAtPosition(this.getWorld(), this.pos.offset(direction));
+        if(!this.getHasDest()){return null;}
+        BlockPos blockPos = new BlockPos(this.getDestX(), this.getDestY(), this.getDestZ());
+        return getInventoryAtPosition(this.getWorld(), blockPos);
     }
 
     /**
         * Gets the inventory that the provided hopper will transfer items from.
         */
     @Nullable
-    public static IInventory getSourceInventory(ExportRuneTile rune) {
-        if(!rune.getHasSource()){return null;}
-        return getInventoryAtPosition(rune.getWorld(), rune.getSourceX(), rune.getSourceY(), rune.getSourceZ());
+    public static IInventory getSourceInventory(ImportRuneTile rune) {
+        Direction direction = rune.getBlockState().get(ImportRune.FACING);
+        return getInventoryAtPosition(rune.getWorld(), rune.pos.offset(direction));
     }
 
     @Nullable
@@ -380,6 +364,7 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
                 iinventory = (IInventory)list.get(worldIn.rand.nextInt(list.size()));
             }
         }
+
         return iinventory;
     }
 
@@ -446,7 +431,7 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
 
     @Override
     protected net.minecraftforge.items.IItemHandler createUnSidedHandler() {
-        return new ExportRuneItemHandler(this);
+        return new ImportRuneItemHandler(this);
     }
 
     public long getLastUpdateTime() {
@@ -461,13 +446,12 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
     private static boolean canExtractItemFromSlot(IInventory inventoryIn, ItemStack stack, int index, Direction side) {
         return !(inventoryIn instanceof ISidedInventory) || ((ISidedInventory)inventoryIn).canExtractItem(index, stack, side);
     }
-    private static boolean pullItemFromSlot(ExportRuneTile rune, IInventory inventoryIn, int index, Direction direction) {
+    private static boolean pullItemFromSlot(ImportRuneTile rune, IInventory inventoryIn, int index, Direction direction) {
         ItemStack itemstack = inventoryIn.getStackInSlot(index);
-        
         if(!rune.getTileData().getBoolean("hasFilter")){
             if (!itemstack.isEmpty() && canExtractItemFromSlot(inventoryIn, itemstack, index, direction)) {
                 ItemStack itemstack1 = itemstack.copy();
-                ItemStack itemstack2 = putStackInInventoryAllSlots(inventoryIn, rune, inventoryIn.decrStackSize(index, 1), (Direction)null);
+                ItemStack itemstack2 = putStackInInventoryAllSlots(inventoryIn, rune, inventoryIn.decrStackSize(index, 1), rune.getBlockState().get(ImportRune.FACING));
                 if (itemstack2.isEmpty()) {
                     inventoryIn.markDirty();
                     return true;
@@ -481,17 +465,15 @@ public class ExportRuneTile extends LockableLootTileEntity implements ITickableT
                     ((!rune.getTileData().getBoolean("isWhiteList") && !itemstack.getItem().getDefaultInstance().isItemEqual(filterItem))))) {
                 
                 ItemStack itemstack1 = itemstack.copy();
-                ItemStack itemstack2 = putStackInInventoryAllSlots(inventoryIn, rune, inventoryIn.decrStackSize(index, 1), (Direction)null);
+                ItemStack itemstack2 = putStackInInventoryAllSlots(inventoryIn, rune, inventoryIn.decrStackSize(index, 1), rune.getBlockState().get(ImportRune.FACING));
                 if (itemstack2.isEmpty()) {
                     inventoryIn.markDirty();
                     return true;
                 }
-
                 inventoryIn.setInventorySlotContents(index, itemstack1);
             }
         }
-
-        return false;
+    return false;
     }
 
     private static boolean isInventoryEmpty(IInventory inventoryIn, Direction side) {
